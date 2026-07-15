@@ -14,7 +14,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ClockHandKit"
+            name: "ClockHandBridge"
+        ),
+        .target(
+            name: "ClockHandKit",
+            dependencies: ["ClockHandBridge"]
         ),
     ]
 )

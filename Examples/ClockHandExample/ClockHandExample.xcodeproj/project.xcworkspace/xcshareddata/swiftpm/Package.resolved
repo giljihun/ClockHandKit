@@ -1,0 +1,15 @@
+{
+  "originHash" : "a1e9ff7fd7df5e42d651631e1b340c1207935daf8bd82d7dd56fee70bc87423b",
+  "pins" : [
+    {
+      "identity" : "clockhandkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/giljihun/ClockHandKit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2f8e79d9d4dd26fa34570cf8fa8adbcf33976e23"
+      }
+    }
+  ],
+  "version" : 3
+}
