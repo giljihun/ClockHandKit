@@ -14,10 +14,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ClockHandKit",
-            swiftSettings: [
-                .swiftLanguageMode(.v5)
-            ]
+            name: "ClockHandKit"
         ),
     ]
 )

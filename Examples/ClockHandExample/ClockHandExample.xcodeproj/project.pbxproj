@@ -6,14 +6,117 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4CE49666300770B7003A2259 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE49665300770B6003A2259 /* WidgetKit.framework */; };
+		4CE49668300770B7003A2259 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE49667300770B7003A2259 /* SwiftUI.framework */; };
+		4CE49673300770B9003A2259 /* ClockHandWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4CE49663300770B6003A2259 /* ClockHandWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4CE4968030077178003A2259 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE49665300770B6003A2259 /* WidgetKit.framework */; };
+		4CE4968130077178003A2259 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE49667300770B7003A2259 /* SwiftUI.framework */; };
+		4CE4968C3007717A003A2259 /* OctreeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4CE4967F30077178003A2259 /* OctreeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4CE49698300773A3003A2259 /* ClockHandKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4CE49697300773A3003A2259 /* ClockHandKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CE49671300770B9003A2259 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CBAF77230076E54003667A0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE49662300770B6003A2259;
+			remoteInfo = ClockHandWidgetExtension;
+		};
+		4CE4968A3007717A003A2259 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CBAF77230076E54003667A0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CE4967E30077178003A2259;
+			remoteInfo = OctreeWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4CE49674300770B9003A2259 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4CE4968C3007717A003A2259 /* OctreeWidgetExtension.appex in Embed Foundation Extensions */,
+				4CE49673300770B9003A2259 /* ClockHandWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE4969B300776F4003A2259 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4CBAF77A30076E55003667A0 /* ClockHandExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClockHandExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CE49663300770B6003A2259 /* ClockHandWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ClockHandWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CE49665300770B6003A2259 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		4CE49667300770B7003A2259 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		4CE4967F30077178003A2259 /* OctreeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OctreeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4CE49677300770B9003A2259 /* Exceptions for "ClockHandWidget" folder in "ClockHandWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4CE49662300770B6003A2259 /* ClockHandWidgetExtension */;
+		};
+		4CE4968D3007717A003A2259 /* Exceptions for "OctreeWidget" folder in "OctreeWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4CE4967E30077178003A2259 /* OctreeWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		4CE4969C300776F4003A2259 /* Exceptions for "OctreeWidget" folder in "Embed Frameworks" phase from "OctreeWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			attributesByRelativePath = {
+				Frameworks/ClockHandRotationEffect.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+			};
+			buildPhase = 4CE4969B300776F4003A2259 /* Embed Frameworks */;
+			membershipExceptions = (
+				Frameworks/ClockHandRotationEffect.xcframework,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4CBAF77C30076E55003667A0 /* ClockHandExample */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ClockHandExample;
+			sourceTree = "<group>";
+		};
+		4CE49669300770B7003A2259 /* ClockHandWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4CE49677300770B9003A2259 /* Exceptions for "ClockHandWidget" folder in "ClockHandWidgetExtension" target */,
+			);
+			path = ClockHandWidget;
+			sourceTree = "<group>";
+		};
+		4CE4968230077178003A2259 /* OctreeWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4CE4968D3007717A003A2259 /* Exceptions for "OctreeWidget" folder in "OctreeWidgetExtension" target */,
+				4CE4969C300776F4003A2259 /* Exceptions for "OctreeWidget" folder in "Embed Frameworks" phase from "OctreeWidgetExtension" target */,
+			);
+			path = OctreeWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,6 +129,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4CE49660300770B6003A2259 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE49698300773A3003A2259 /* ClockHandKit in Frameworks */,
+				4CE49668300770B7003A2259 /* SwiftUI.framework in Frameworks */,
+				4CE49666300770B7003A2259 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE4967C30077178003A2259 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CE4968130077178003A2259 /* SwiftUI.framework in Frameworks */,
+				4CE4968030077178003A2259 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -33,6 +155,9 @@
 			isa = PBXGroup;
 			children = (
 				4CBAF77C30076E55003667A0 /* ClockHandExample */,
+				4CE49669300770B7003A2259 /* ClockHandWidget */,
+				4CE4968230077178003A2259 /* OctreeWidget */,
+				4CE49664300770B6003A2259 /* Frameworks */,
 				4CBAF77B30076E55003667A0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +166,19 @@
 			isa = PBXGroup;
 			children = (
 				4CBAF77A30076E55003667A0 /* ClockHandExample.app */,
+				4CE49663300770B6003A2259 /* ClockHandWidgetExtension.appex */,
+				4CE4967F30077178003A2259 /* OctreeWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4CE49664300770B6003A2259 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CE49665300770B6003A2259 /* WidgetKit.framework */,
+				4CE49667300770B7003A2259 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,10 +191,13 @@
 				4CBAF77630076E54003667A0 /* Sources */,
 				4CBAF77730076E54003667A0 /* Frameworks */,
 				4CBAF77830076E54003667A0 /* Resources */,
+				4CE49674300770B9003A2259 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4CE49672300770B9003A2259 /* PBXTargetDependency */,
+				4CE4968B3007717A003A2259 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				4CBAF77C30076E55003667A0 /* ClockHandExample */,
@@ -70,6 +209,52 @@
 			productReference = 4CBAF77A30076E55003667A0 /* ClockHandExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		4CE49662300770B6003A2259 /* ClockHandWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CE49678300770B9003A2259 /* Build configuration list for PBXNativeTarget "ClockHandWidgetExtension" */;
+			buildPhases = (
+				4CE4965F300770B6003A2259 /* Sources */,
+				4CE49660300770B6003A2259 /* Frameworks */,
+				4CE49661300770B6003A2259 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4CE49669300770B7003A2259 /* ClockHandWidget */,
+			);
+			name = ClockHandWidgetExtension;
+			packageProductDependencies = (
+				4CE49697300773A3003A2259 /* ClockHandKit */,
+			);
+			productName = ClockHandWidgetExtension;
+			productReference = 4CE49663300770B6003A2259 /* ClockHandWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		4CE4967E30077178003A2259 /* OctreeWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CE4968E3007717A003A2259 /* Build configuration list for PBXNativeTarget "OctreeWidgetExtension" */;
+			buildPhases = (
+				4CE4967B30077178003A2259 /* Sources */,
+				4CE4967C30077178003A2259 /* Frameworks */,
+				4CE4967D30077178003A2259 /* Resources */,
+				4CE4969B300776F4003A2259 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4CE4968230077178003A2259 /* OctreeWidget */,
+			);
+			name = OctreeWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = OctreeWidgetExtension;
+			productReference = 4CE4967F30077178003A2259 /* OctreeWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -77,11 +262,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2610;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					4CBAF77930076E54003667A0 = {
 						CreatedOnToolsVersion = 26.1.1;
+					};
+					4CE49662300770B6003A2259 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					4CE4967E30077178003A2259 = {
+						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
 			};
@@ -94,18 +285,37 @@
 			);
 			mainGroup = 4CBAF77130076E54003667A0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4CE49696300773A3003A2259 /* XCRemoteSwiftPackageReference "ClockHandKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4CBAF77B30076E55003667A0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				4CBAF77930076E54003667A0 /* ClockHandExample */,
+				4CE49662300770B6003A2259 /* ClockHandWidgetExtension */,
+				4CE4967E30077178003A2259 /* OctreeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4CBAF77830076E54003667A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE49661300770B6003A2259 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE4967D30077178003A2259 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +332,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4CE4965F300770B6003A2259 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CE4967B30077178003A2259 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CE49672300770B9003A2259 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CE49662300770B6003A2259 /* ClockHandWidgetExtension */;
+			targetProxy = 4CE49671300770B9003A2259 /* PBXContainerItemProxy */;
+		};
+		4CE4968B3007717A003A2259 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CE4967E30077178003A2259 /* OctreeWidgetExtension */;
+			targetProxy = 4CE4968A3007717A003A2259 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4CBAF78330076E59003667A0 /* Debug */ = {
@@ -178,7 +415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -236,7 +473,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -310,6 +547,130 @@
 			};
 			name = Release;
 		};
+		4CE49675300770B9003A2259 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M5VM39FM9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ClockHandWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ClockHandWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gil.ClockHandExample.ClockHandWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4CE49676300770B9003A2259 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M5VM39FM9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ClockHandWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ClockHandWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gil.ClockHandExample.ClockHandWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4CE4968F3007717A003A2259 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M5VM39FM9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OctreeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OctreeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gil.ClockHandExample.OctreeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4CE496903007717A003A2259 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M5VM39FM9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OctreeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OctreeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = gil.ClockHandExample.OctreeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -331,7 +692,44 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		4CE49678300770B9003A2259 /* Build configuration list for PBXNativeTarget "ClockHandWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CE49675300770B9003A2259 /* Debug */,
+				4CE49676300770B9003A2259 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CE4968E3007717A003A2259 /* Build configuration list for PBXNativeTarget "OctreeWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CE4968F3007717A003A2259 /* Debug */,
+				4CE496903007717A003A2259 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4CE49696300773A3003A2259 /* XCRemoteSwiftPackageReference "ClockHandKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/giljihun/ClockHandKit.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4CE49697300773A3003A2259 /* ClockHandKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CE49696300773A3003A2259 /* XCRemoteSwiftPackageReference "ClockHandKit" */;
+			productName = ClockHandKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4CBAF77230076E54003667A0 /* Project object */;
 }
