@@ -29,16 +29,18 @@ public enum ClockHandPeriod: Hashable, Codable, Sendable {
 
 // MARK: - Private API Bridge
 
+// Declared as a free generic function (not a protocol extension method) to avoid
+// swift::irgen::methodRequiresReifiedVTableEntry crashing on body-less some View declarations.
+// Calling convention is identical to the protocol extension method ABI: self (view) is the
+// first explicit parameter, followed by value parameters, then implicit metatype + witness table.
 @available(iOS 16.0, *)
-private extension View {
-    /// Direct binding to WidgetKit's private `_clockHandRotationEffect(period:in:anchor:)` symbol.
-    @_silgen_name("$s7SwiftUI4ViewP9WidgetKitE24_clockHandRotationEffect_2in6anchorQrAD06_ClockghI0V6PeriodO_10Foundation8TimeZoneVAA9UnitPointVtF")
-    func _clockHandImpl(
-        period: ClockHandPeriod,
-        in timeZone: TimeZone,
-        anchor: UnitPoint
-    ) -> some View
-}
+@_silgen_name("$s7SwiftUI4ViewP9WidgetKitE24_clockHandRotationEffect_2in6anchorQrAD06_ClockghI0V6PeriodO_10Foundation8TimeZoneVAA9UnitPointVtF")
+private func _clockHandImpl<V: View>(
+    _ view: V,
+    period: ClockHandPeriod,
+    in timeZone: TimeZone,
+    anchor: UnitPoint
+) -> some View
 
 // MARK: - ViewModifier
 
@@ -62,7 +64,7 @@ public struct ClockHandRotationEffect: ViewModifier {
     }
 
     public func body(content: Content) -> some View {
-        content._clockHandImpl(period: period, in: timeZone, anchor: anchor)
+        _clockHandImpl(content, period: period, in: timeZone, anchor: anchor)
     }
 }
 
@@ -89,7 +91,7 @@ public extension View {
         in timeZone: TimeZone = .current,
         anchor: UnitPoint = .center
     ) -> some View {
-        _clockHandImpl(period: period, in: timeZone, anchor: anchor)
+        _clockHandImpl(self, period: period, in: timeZone, anchor: anchor)
     }
 
     /// octree/ClockHandRotationKit-compatible API for drop-in migration.
