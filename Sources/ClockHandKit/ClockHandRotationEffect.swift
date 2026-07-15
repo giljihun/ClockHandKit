@@ -94,4 +94,24 @@ public extension View {
     ) -> some View {
         _clockHandImpl(period: period, in: timeZone, anchor: anchor)
     }
+
+    /// octree/ClockHandRotationKit 호환 API.
+    ///
+    /// 기존 `clockHandRotationEffect(period: TimeInterval)` 코드를 수정 없이 마이그레이션할 수 있습니다.
+    ///
+    /// ```swift
+    /// // 기존 octree 코드 그대로 동작
+    /// view.clockHandRotationEffect(period: 60.0)
+    /// ```
+    ///
+    /// - Parameter period: 회전 주기 (초 단위 `TimeInterval`)
+    /// - Parameter timeZone: 기준 타임존. 기본값 `.current`
+    /// - Parameter anchor: 회전 중심점. 기본값 `.center`
+    func clockHandRotationEffect(
+        period: TimeInterval,
+        in timeZone: TimeZone = .current,
+        anchor: UnitPoint = .center
+    ) -> some View {
+        clockHandRotationEffect(period: .custom(period), in: timeZone, anchor: anchor)
+    }
 }
