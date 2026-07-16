@@ -7,6 +7,11 @@
 
 import SwiftUI
 import Foundation
+import OSLog
+
+// Logger visible in Console.app under subsystem "com.clockhandkit"
+@available(iOS 16.0, *)
+private let clockHandLog = Logger(subsystem: "com.clockhandkit", category: "runtime-bridge")
 
 // MARK: - Period
 
@@ -82,17 +87,21 @@ private func applyClockHandModifier<V: View>(
     timeZone: TimeZone,
     anchor: UnitPoint
 ) -> AnyView {
-    // Look up the private type at runtime by mangled name
+    // Step 1: Look up the private type at runtime by mangled name
     guard let clockHandType = _typeByName("9WidgetKit24_ClockHandRotationEffectV") else {
+        clockHandLog.error("[Step 1 FAIL] _typeByName returned nil — mangled name may be wrong or WidgetKit not loaded")
         return AnyView(view)
     }
+    clockHandLog.debug("[Step 1 OK] Found type: \(String(describing: clockHandType))")
 
-    // The type must be Decodable for JSON-based construction
+    // Step 2: The type must be Decodable for JSON-based construction
     guard let decodableType = clockHandType as? any Decodable.Type else {
+        clockHandLog.error("[Step 2 FAIL] Type does not conform to Decodable")
         return AnyView(view)
     }
+    clockHandLog.debug("[Step 2 OK] Type conforms to Decodable")
 
-    // Build the JSON payload matching WidgetKit's Codable format
+    // Step 3: Build the JSON payload matching WidgetKit's Codable format
     let periodPayload: _ClockHandData.PeriodPayload
     switch period {
     case .hourHand:
@@ -111,21 +120,37 @@ private func applyClockHandModifier<V: View>(
         anchor: .init(x: Double(anchor.x), y: Double(anchor.y))
     )
 
-    guard let jsonData = try? JSONEncoder().encode(data) else {
+    let jsonData: Data
+    do {
+        jsonData = try JSONEncoder().encode(data)
+        if let jsonString = String(data: jsonData, encoding: .utf8) {
+            clockHandLog.debug("[Step 3 OK] Encoded JSON: \(jsonString, privacy: .public)")
+        }
+    } catch {
+        clockHandLog.error("[Step 3 FAIL] JSON encoding error: \(error.localizedDescription, privacy: .public)")
         return AnyView(view)
     }
 
-    // Decode as the private WidgetKit type (returned as `any Decodable`)
-    guard let decoded = try? JSONDecoder().decode(decodableType, from: jsonData) else {
+    // Step 4: Decode as the private WidgetKit type (returned as `any Decodable`)
+    let decoded: any Decodable
+    do {
+        decoded = try JSONDecoder().decode(decodableType, from: jsonData)
+        clockHandLog.debug("[Step 4 OK] Decoded into _ClockHandRotationEffect")
+    } catch {
+        clockHandLog.error("[Step 4 FAIL] JSON decode error — Codable format likely mismatched: \(error.localizedDescription, privacy: .public)")
+        clockHandLog.error("[Step 4 FAIL] Full error: \(String(describing: error), privacy: .public)")
         return AnyView(view)
     }
 
-    // Cast to `any ViewModifier` — succeeds because `_ClockHandRotationEffect: ViewModifier`
+    // Step 5: Cast to `any ViewModifier` — succeeds because `_ClockHandRotationEffect: ViewModifier`
     guard let modifier = decoded as? any ViewModifier else {
+        clockHandLog.error("[Step 5 FAIL] Decoded value is not a ViewModifier — protocol conformance not found")
         return AnyView(view)
     }
+    clockHandLog.debug("[Step 5 OK] Cast to any ViewModifier succeeded")
 
-    // Existential opening: unwraps `any ViewModifier` into a concrete M: ViewModifier
+    // Step 6: Existential opening: unwraps `any ViewModifier` into a concrete M: ViewModifier
+    clockHandLog.info("[ALL OK] Applying WidgetKit._ClockHandRotationEffect via runtime bridge")
     return AnyView(_applyModifier(view, modifier: modifier))
 }
 
