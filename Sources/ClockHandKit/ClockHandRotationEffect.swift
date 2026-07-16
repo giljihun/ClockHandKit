@@ -7,13 +7,136 @@
 
 import SwiftUI
 import Foundation
-@_exported import ClockHandBridge
+
+// MARK: - Period
+
+/// The rotation period for a clock hand effect.
+@available(iOS 16.0, *)
+public enum ClockHandPeriod {
+    case hourHand
+    case minuteHand
+    case secondHand
+    case custom(Double)
+}
+
+// MARK: - Codable JSON structures matching WidgetKit._ClockHandRotationEffect
+
+/// Mirrors the default Codable synthesis of `WidgetKit._ClockHandRotationEffect`.
+/// The struct layout and CodingKeys must match WidgetKit's private type exactly.
+private struct _ClockHandData: Encodable {
+    let period: PeriodPayload
+    let timeZone: TimeZonePayload
+    let anchor: AnchorPayload
+
+    enum PeriodPayload: Encodable {
+        case hourHand
+        case minuteHand
+        case secondHand
+        case custom(Double)
+
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            switch self {
+            case .hourHand:
+                try container.encode(EmptyPayload(), forKey: .hourHand)
+            case .minuteHand:
+                try container.encode(EmptyPayload(), forKey: .minuteHand)
+            case .secondHand:
+                try container.encode(EmptyPayload(), forKey: .secondHand)
+            case .custom(let value):
+                var nested = container.nestedContainer(keyedBy: CustomKeys.self, forKey: .custom)
+                try nested.encode(value, forKey: ._0)
+            }
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case hourHand, minuteHand, secondHand, custom
+        }
+        enum CustomKeys: String, CodingKey {
+            case _0
+        }
+    }
+
+    struct EmptyPayload: Encodable {}
+    struct TimeZonePayload: Encodable {
+        let identifier: String
+    }
+    struct AnchorPayload: Encodable {
+        let x: Double
+        let y: Double
+    }
+}
+
+// MARK: - Runtime bridge to WidgetKit's private modifier
+
+/// Looks up `WidgetKit._ClockHandRotationEffect` at runtime via `_typeByName` and
+/// applies it as a modifier using Codable round-tripping + existential opening.
+///
+/// This avoids the Swift compiler crash that occurs with `@_silgen_name` on a
+/// body-less `some View` function (`methodRequiresReifiedVTableEntry` / opaque
+/// type descriptor emission bug in Swift 6.2+).
+@available(iOS 16.0, *)
+private func applyClockHandModifier<V: View>(
+    to view: V,
+    period: ClockHandPeriod,
+    timeZone: TimeZone,
+    anchor: UnitPoint
+) -> AnyView {
+    // Look up the private type at runtime by mangled name
+    guard let clockHandType = _typeByName("9WidgetKit24_ClockHandRotationEffectV") else {
+        return AnyView(view)
+    }
+
+    // The type must be Decodable for JSON-based construction
+    guard let decodableType = clockHandType as? any Decodable.Type else {
+        return AnyView(view)
+    }
+
+    // Build the JSON payload matching WidgetKit's Codable format
+    let periodPayload: _ClockHandData.PeriodPayload
+    switch period {
+    case .hourHand:
+        periodPayload = .hourHand
+    case .minuteHand:
+        periodPayload = .minuteHand
+    case .secondHand:
+        periodPayload = .secondHand
+    case .custom(let seconds):
+        periodPayload = .custom(seconds)
+    }
+
+    let data = _ClockHandData(
+        period: periodPayload,
+        timeZone: .init(identifier: timeZone.identifier),
+        anchor: .init(x: Double(anchor.x), y: Double(anchor.y))
+    )
+
+    guard let jsonData = try? JSONEncoder().encode(data) else {
+        return AnyView(view)
+    }
+
+    // Decode as the private WidgetKit type (returned as `any Decodable`)
+    guard let decoded = try? JSONDecoder().decode(decodableType, from: jsonData) else {
+        return AnyView(view)
+    }
+
+    // Cast to `any ViewModifier` — succeeds because `_ClockHandRotationEffect: ViewModifier`
+    guard let modifier = decoded as? any ViewModifier else {
+        return AnyView(view)
+    }
+
+    // Existential opening: unwraps `any ViewModifier` into a concrete M: ViewModifier
+    return AnyView(_applyModifier(view, modifier: modifier))
+}
+
+@available(iOS 16.0, *)
+private func _applyModifier<V: View, M: ViewModifier>(_ view: V, modifier: M) -> some View {
+    view.modifier(modifier)
+}
 
 // MARK: - ViewModifier
 
 /// A `ViewModifier` that applies a clock-hand rotation effect to a widget view.
-///
-/// Can be used with `.modifier(ClockHandRotationEffect(...))` syntax.
 @available(iOS 16.0, *)
 public struct ClockHandRotationEffect: ViewModifier {
     public let period: ClockHandPeriod
@@ -31,7 +154,7 @@ public struct ClockHandRotationEffect: ViewModifier {
     }
 
     public func body(content: Content) -> some View {
-        _clockHandRotationEffectBridge(content, period: period, in: timeZone, anchor: anchor)
+        applyClockHandModifier(to: content, period: period, timeZone: timeZone, anchor: anchor)
     }
 }
 
@@ -45,7 +168,7 @@ public extension View {
         in timeZone: TimeZone = .current,
         anchor: UnitPoint = .center
     ) -> some View {
-        _clockHandRotationEffectBridge(self, period: period, in: timeZone, anchor: anchor)
+        applyClockHandModifier(to: self, period: period, timeZone: timeZone, anchor: anchor)
     }
 
     /// octree/ClockHandRotationKit-compatible API for drop-in migration.
