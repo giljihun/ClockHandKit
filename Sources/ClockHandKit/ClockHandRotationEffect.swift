@@ -5,9 +5,10 @@
 //  Created by 길지훈 on 2026-07-15.
 //
 
-import SwiftUI
 import Foundation
 import OSLog
+import SwiftUI
+import WidgetKit
 
 // Logger visible in Console.app under subsystem "com.clockhandkit"
 @available(iOS 16.0, *)
@@ -22,54 +23,29 @@ public enum ClockHandPeriod {
     case minuteHand
     case secondHand
     case custom(Double)
+
+    var duration: TimeInterval {
+        switch self {
+        case .hourHand:
+            return 12 * 60 * 60
+        case .minuteHand:
+            return 60 * 60
+        case .secondHand:
+            return 60
+        case .custom(let seconds):
+            return seconds
+        }
+    }
 }
 
 // MARK: - Codable JSON structures matching WidgetKit._ClockHandRotationEffect
 
 /// Mirrors the default Codable synthesis of `WidgetKit._ClockHandRotationEffect`.
 /// The struct layout and CodingKeys must match WidgetKit's private type exactly.
-private struct _ClockHandData: Encodable {
-    let period: PeriodPayload
-    let timeZone: TimeZonePayload
-    let anchor: AnchorPayload
-
-    enum PeriodPayload: Encodable {
-        case hourHand
-        case minuteHand
-        case secondHand
-        case custom(Double)
-
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            switch self {
-            case .hourHand:
-                try container.encode(EmptyPayload(), forKey: .hourHand)
-            case .minuteHand:
-                try container.encode(EmptyPayload(), forKey: .minuteHand)
-            case .secondHand:
-                try container.encode(EmptyPayload(), forKey: .secondHand)
-            case .custom(let value):
-                var nested = container.nestedContainer(keyedBy: CustomKeys.self, forKey: .custom)
-                try nested.encode(value, forKey: ._0)
-            }
-        }
-
-        enum CodingKeys: String, CodingKey {
-            case hourHand, minuteHand, secondHand, custom
-        }
-        enum CustomKeys: String, CodingKey {
-            case _0
-        }
-    }
-
-    struct EmptyPayload: Encodable {}
-    struct TimeZonePayload: Encodable {
-        let identifier: String
-    }
-    struct AnchorPayload: Encodable {
-        let x: Double
-        let y: Double
-    }
+struct _ClockHandData: Encodable {
+    let period: TimeInterval
+    let timeZone: TimeZone
+    let anchor: UnitPoint
 }
 
 // MARK: - Runtime bridge to WidgetKit's private modifier
@@ -102,22 +78,10 @@ private func applyClockHandModifier<V: View>(
     clockHandLog.debug("[Step 2 OK] Type conforms to Decodable")
 
     // Step 3: Build the JSON payload matching WidgetKit's Codable format
-    let periodPayload: _ClockHandData.PeriodPayload
-    switch period {
-    case .hourHand:
-        periodPayload = .hourHand
-    case .minuteHand:
-        periodPayload = .minuteHand
-    case .secondHand:
-        periodPayload = .secondHand
-    case .custom(let seconds):
-        periodPayload = .custom(seconds)
-    }
-
     let data = _ClockHandData(
-        period: periodPayload,
-        timeZone: .init(identifier: timeZone.identifier),
-        anchor: .init(x: Double(anchor.x), y: Double(anchor.y))
+        period: period.duration,
+        timeZone: timeZone,
+        anchor: anchor
     )
 
     let jsonData: Data

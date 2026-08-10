@@ -16,5 +16,9 @@ let package = Package(
         .target(
             name: "ClockHandKit"
         ),
+        .testTarget(
+            name: "ClockHandKitTests",
+            dependencies: ["ClockHandKit"]
+        ),
     ]
 )
