@@ -2,11 +2,17 @@
 
 # ClockHandKit
 
-A Swift package that keeps hour, minute, and second hands moving with real time
-in iOS Home Screen widgets built with Xcode 26.1 and later.
+ClockHandKit helps you add clock-hand animations to iOS Home Screen widgets.
+
+Apple uses this effect in its own Clock widget, but does not expose it as a
+public API to third-party developers.
+
+ClockHandKit uses WidgetKit's private `_ClockHandRotationEffect` modifier to
+keep hour, minute, and second hands synchronized with the current time.
 
 > [!CAUTION]
-> ClockHandKit uses undocumented WidgetKit APIs that may change without notice and may not pass App Review.
+> ClockHandKit uses a private WidgetKit API.
+> It may change without notice, and apps using it may not pass App Review.
 
 ## Usage
 
@@ -40,7 +46,7 @@ hand.clockHandRotationEffect(
 ## Why ClockHandKit
 
 [ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit) wraps
-WidgetKit's undocumented clock-hand effect. Starting with iOS 26.1, that entry
+WidgetKit's private clock-hand effect. Starting with iOS 26.1, that entry
 point stops applying the effect to third-party apps when both the linked SDK and
 the running OS are iOS 26.1 or later. The code still builds, but WidgetKit
 returns the original view without the rotation modifier.

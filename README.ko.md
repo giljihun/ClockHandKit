@@ -2,11 +2,19 @@
 
 # ClockHandKit
 
-Xcode 26.1 이상에서 빌드한 iOS 홈 화면 위젯의 시침·분침·초침을 실제 시간에 맞춰
-회전시키는 Swift 패키지입니다.
+ClockHandKit은 iOS 홈 화면 위젯에 시계바늘 애니메이션을 구현하도록
+도와주는 Swift 패키지입니다.
+
+Apple은 이 효과를 시스템 시계 위젯에서 사용하지만,
+서드파티 개발자에게는 공개 API로 제공하지 않습니다.
+
+ClockHandKit은 WidgetKit의 비공개 `_ClockHandRotationEffect` modifier를 사용해
+시침·분침·초침을 현재 시간과 동기화합니다.
 
 > [!CAUTION]
-> ClockHandKit은 문서화되지 않은 WidgetKit API를 사용하며, 예고 없이 동작이 바뀌거나 App Review를 통과하지 못할 수 있습니다.
+> ClockHandKit은 WidgetKit의 비공개 API를 사용합니다.
+> 이 API는 예고 없이 바뀔 수 있으며,
+> 이를 사용하는 앱은 App Review를 통과하지 못할 수 있습니다.
 
 ## 사용법
 
@@ -40,7 +48,7 @@ hand.clockHandRotationEffect(
 ## ClockHandKit을 만든 이유
 
 [ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit)은
-WidgetKit의 문서화되지 않은 시계바늘 효과를 Swift에서 사용할 수 있게 만든
+WidgetKit의 비공개 시계바늘 효과를 Swift에서 사용할 수 있게 만든
 패키지입니다. iOS 26.1부터 링크 SDK와 실행 OS가 모두 iOS 26.1 이상인 서드파티
 앱에서는 이 진입점이 회전 효과를 적용하지 않습니다. 코드는 정상적으로 빌드되지만
 WidgetKit은 회전 modifier가 없는 원본 View를 반환합니다.
