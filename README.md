@@ -105,11 +105,16 @@ WidgetKit and the device determine the actual rendering cadence.
 
 ## Why ClockHandKit exists
 
-[ClockHandRotationKit][clockhand-rotation-kit] worked as expected through Xcode 26.0.1.
+Apps using [ClockHandRotationKit][clockhand-rotation-kit] worked when built with Xcode 26.0.1.
+Those builds also worked in the tested iOS 26.1+ environments.
 
-The issue appeared with iOS 26.1.
-A third-party widget linked against the iOS SDK from Xcode 26.1 still built successfully.
-However, the rotation effect wasn't applied when the widget ran on iOS 26.1 or later.
+The regression appeared only when both conditions were true:
+
+- The third-party app was built with **Xcode 26.1 or later**.
+- It ran on **iOS 26.1 or later**.
+
+The app still **compiled and linked successfully**.
+However, the rotation effect **wasn't applied at runtime**.
 
 Investigation showed that WidgetKit added a runtime gate.
 The gate checks the linked SDK and the app's bundle identifier.
