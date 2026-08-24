@@ -2,13 +2,13 @@
 
 # ClockHandKit
 
-ClockHandKit helps you add clock-hand animations to iOS Home Screen widgets.
+ClockHandKit helps you add **real-time clock-hand animations**
+to iOS Home Screen widgets.
 
-Apple uses this effect in its own Clock widget, but does not expose it as a
-public API to third-party developers.
-
-ClockHandKit uses WidgetKit's private `_ClockHandRotationEffect` modifier to
-keep hour, minute, and second hands synchronized with the current time.
+Apple uses the same effect in its Clock widget,
+but does not expose it as a public API for third-party developers.
+ClockHandKit accesses WidgetKit's private `_ClockHandRotationEffect` modifier
+directly.
 
 > [!CAUTION]
 > ClockHandKit uses a private WidgetKit API.
@@ -45,38 +45,42 @@ hand.clockHandRotationEffect(
 
 ## Why ClockHandKit
 
-[ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit) wraps
-WidgetKit's private clock-hand effect. Starting with iOS 26.1, that entry
-point stops applying the effect to third-party apps when both the linked SDK and
-the running OS are iOS 26.1 or later. The code still builds, but WidgetKit
-returns the original view without the rotation modifier.
+[ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit) makes
+WidgetKit's private clock-hand effect available to third-party widgets.
 
-| Built with | Running on | Original entry point |
+Starting with iOS 26.1, the behavior of its original entry point depends on
+the linked SDK and the running OS:
+
+| Linked SDK | Running OS | Result |
 | --- | --- | --- |
-| Xcode 26.0.1 | iOS 26.1 | Rotation applied |
-| Xcode 26.1 | iOS 26.0.x | Rotation applied |
-| Xcode 26.1 | iOS 26.1 | No rotation |
+| iOS 26.0 SDK | iOS 26.1 | Rotation applied |
+| iOS 26.1 SDK | iOS 26.0.x | Rotation applied |
+| iOS 26.1 SDK | iOS 26.1 | No rotation |
 
-**Only the last combination fails:** the app must be built with the new SDK and
-run on the new OS for the new WidgetKit behavior to take effect.
+**Only the last combination fails.**
 
-This is a WidgetKit runtime gate—not a Swift-version mismatch or a JSON-format
-change. ClockHandKit constructs and applies the underlying modifier without
-calling the gated entry point.
+The code still builds, but WidgetKit returns the original view without the
+rotation modifier.
 
-See the original [iOS 26.1 compatibility report](https://github.com/octree/ClockHandRotationKit/issues/11)
-and the [WidgetKit binary diff](https://github.com/blacktop/ipsw-diffs/blob/809573f26c4185c71fc786fb9adadab06c50ad0f/26_1_23B5044l__vs_26_1_23B5059e/DYLIBS/WidgetKit.md#L280-L304).
+This is a **WidgetKit runtime gate**.
+It is not a Swift-version mismatch or a JSON-format change.
+
+ClockHandKit constructs and applies the underlying modifier
+without calling the gated entry point.
+
+Further reading:
+
+- [Original iOS 26.1 compatibility report](https://github.com/octree/ClockHandRotationKit/issues/11)
+- [WidgetKit binary diff](https://github.com/blacktop/ipsw-diffs/blob/809573f26c4185c71fc786fb9adadab06c50ad0f/26_1_23B5044l__vs_26_1_23B5059e/DYLIBS/WidgetKit.md#L280-L304)
 
 ## How it works
-
-ClockHandKit:
 
 1. Resolves `WidgetKit._ClockHandRotationEffect` at runtime.
 2. Creates the modifier from its observed Codable representation.
 3. Applies it as a SwiftUI `ViewModifier`.
 
-If any step fails, ClockHandKit returns the original view and records the
-failure through `OSLog`.
+If any step fails, ClockHandKit returns the original view.
+The failure is recorded through `OSLog`.
 
 ## Requirements
 
@@ -87,7 +91,7 @@ failure through `OSLog`.
 
 ## Tested environments
 
-ClockHandKit has been tested in the following environments:
+### ClockHandKit
 
 | Scope | Environments |
 | --- | --- |
@@ -95,19 +99,26 @@ ClockHandKit has been tested in the following environments:
 | Example app and both Widget Extensions | Xcode 26.5 |
 | Runtime modifier bridge | iOS 26.1 and iOS 26.5 Simulators |
 
-During root-cause analysis, a minimal ClockHandRotationKit consumer was compiled
-and linked across this complete matrix:
+### ClockHandRotationKit compatibility matrix
+
+During root-cause analysis, a minimal ClockHandRotationKit consumer was
+compiled and linked across the following matrix.
+
+This was a binary compile-and-link test, not an end-to-end widget runtime test.
 
 | Dimension | Tested values |
 | --- | --- |
-| ClockHandRotationKit releases | 1.0.0, 1.0.1, 1.1.0 |
+| Releases | 1.0.0, 1.0.1, 1.1.0 |
 | Xcode | 26.0.1 (17A400), 26.1.1 (17B100), 26.5 (17F42) |
-| Target | iOS device arm64, iOS Simulator arm64, iOS Simulator x86_64 |
+| Build target | iOS arm64, Simulator arm64, Simulator x86_64 |
 | Configuration | Debug, Release |
 
-That is **3 releases × 3 Xcode versions × 3 targets × 2 configurations = 54
-consumer compile/link combinations**. All 54 succeeded, isolating the regression
-to runtime behavior rather than compilation.
+`3 releases × 3 Xcode versions × 3 targets × 2 configurations = 54`
+
+**All 54 consumer compile/link combinations succeeded.**
+
+This isolates the regression to runtime behavior rather than compilation or
+linking.
 
 ## Migrating from ClockHandRotationKit
 
@@ -131,15 +142,17 @@ The typed API is recommended for new code:
 .clockHandRotationEffect(period: .secondHand)
 ```
 
-ClockHandKit requires iOS 16 or later, while ClockHandRotationKit declares iOS
-14. Do not import both modules into the same target because their extension
-methods may conflict.
+ClockHandRotationKit declares iOS 14, but ClockHandKit requires iOS 16 or later.
+
+Do not import both modules into the same target.
+Their extension methods may conflict.
 
 ## Limitations and diagnostics
 
-- WidgetKit's private type name and Codable representation may change.
-- If the runtime bridge fails, the widget remains visible without the rotation
-  effect.
+- **Private API stability:** WidgetKit's type name and Codable representation
+  may change.
+- **Fail-open behavior:** If the runtime bridge fails, the widget remains
+  visible without the rotation effect.
 
 Runtime failures are logged with subsystem `com.clockhandkit` and category
 `runtime-bridge`:
@@ -150,8 +163,8 @@ log stream --predicate 'subsystem == "com.clockhandkit"'
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or pull
-request.
+Please read the [contribution guide](CONTRIBUTING.md)
+before opening an issue or pull request.
 
 ## Acknowledgements
 

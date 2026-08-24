@@ -1,45 +1,39 @@
+**English** · [한국어](CONTRIBUTING.ko.md)
+
 # Contributing to ClockHandKit
 
-Thank you for helping investigate and document WidgetKit's clock-hand rotation
-behavior.
+Thank you for helping investigate and document
+WidgetKit's clock-hand rotation behavior.
 
-ClockHandKit is an experimental private-API research project. Contributions
-should improve reproducibility, compatibility knowledge, diagnostics, tests, or
-documentation. Changes intended to conceal private-API usage, evade review, or
-present the package as App Store-safe will not be accepted.
+ClockHandKit relies on private WidgetKit behavior. Reproducible compatibility
+reports, diagnostics, tests, and documentation are especially valuable.
 
 ## Before opening an issue
 
-Please search existing issues and separate the stage that failed:
+Search existing issues first. Then identify where the failure occurs:
 
-1. Package compilation
-2. App or widget extension linking
-3. Runtime type lookup and payload decoding
-4. Modifier construction
-5. Visible animation in an installed Home Screen widget
-6. App Store Connect processing, TestFlight, or App Review
+1. Package compilation or linking
+2. Runtime lookup, payload decoding, or modifier construction
+3. Visible animation in an installed Home Screen widget
+4. App Store Connect processing, TestFlight, or App Review
 
-“It works” and “it does not work” are not sufficient on their own. A successful
-build does not establish runtime behavior, and successful processing does not
-establish App Store compliance.
+A successful build does not establish runtime behavior.
+
+Describe what you tested, where you tested it, and what you observed.
 
 ## Compatibility reports
 
-Compatibility reports are the most valuable contribution at this stage. Please
-include:
+Please include:
 
-- ClockHandKit revision or release
-- Xcode version and build number
-- Linked iOS SDK version
-- Runtime iOS version and build number
-- Physical device model or simulator model
-- Whether the result came from an app preview, simulator app, widget gallery,
-  or installed Home Screen widget
-- Test app and widget bundle identifiers; use disposable test identifiers and
-  do not publish credentials or production secrets
-- Whether each of the six stages above passed or failed
+- ClockHandKit release or commit
+- Xcode version, build number, and linked iOS SDK
+- iOS version, build number, and device or simulator model
+- Where the result was observed: preview, simulator app, widget gallery, or an
+  installed Home Screen widget
+- Test app and widget bundle identifiers; use non-production identifiers
+- Expected behavior, observed behavior, and the stage that failed
 - Relevant `com.clockhandkit` / `runtime-bridge` logs
-- A minimal reproduction project when possible
+- A minimal reproduction project or short screen recording when possible
 
 Useful version commands include:
 
@@ -54,12 +48,10 @@ Filter ClockHandKit logs with:
 log stream --predicate 'subsystem == "com.clockhandkit"'
 ```
 
-For visible animation reports, a short screen recording is especially helpful.
-
 ## Local development
 
-ClockHandKit is an iOS-only Swift package. List available simulator destinations
-and then build and test against an installed iOS Simulator:
+ClockHandKit is an iOS-only Swift package. List available destinations, then
+build and test against an installed iOS Simulator:
 
 ```shell
 xcodebuild -scheme ClockHandKit -showdestinations
@@ -75,39 +67,36 @@ xcodebuild \
   test
 ```
 
-Substitute a destination that exists on your machine. Also verify that the
-package manifest can be loaded:
+Replace the destination with one installed on your machine. Also verify that
+the package manifest can be loaded:
 
 ```shell
 swift package dump-package
 ```
 
-Runtime construction tests are not a substitute for installing the example
-widget and confirming its animation in the actual widget host.
+Runtime bridge tests do not replace installing the example widget and checking
+its animation in the widget host.
 
 ## Pull requests
 
 Before submitting a pull request:
 
 1. Open an issue first for behavior changes or substantial API changes.
-2. Keep the change focused and avoid unrelated formatting.
-3. Add or update tests for payload and period behavior when applicable.
+2. Keep the change focused.
+3. Add or update relevant tests.
 4. Build and test against an iOS Simulator.
-5. Update both `README.md` and `README.ko.md` when user-facing facts change.
-6. State exactly what was verified and what remains unverified.
-7. Include the Xcode, SDK, and runtime versions used for verification.
-
-Do not describe simulator probes as physical-device results or TestFlight
-processing as App Store approval.
+5. Keep the English and Korean documentation in sync.
+6. State exactly what was verified, including Xcode, SDK, runtime, and test
+   environment details.
 
 ## Implementation guidelines
 
-- Preserve fail-open behavior: if a private runtime step fails, return the
-  original view instead of crashing the widget.
+- Preserve fail-open behavior: return the original view if a private runtime
+  step fails.
 - Keep runtime bridge failures observable through structured logging.
 - Treat type names, Codable layouts, and private conformances as unstable.
-- Support claims about private-framework behavior with a reproducible probe,
-  binary evidence, or both.
+- Support private-framework claims with a reproducible probe, binary evidence,
+  or both.
 - Prefer small public APIs and keep reverse-engineering details internal.
 - Do not add telemetry or collect user data.
 
