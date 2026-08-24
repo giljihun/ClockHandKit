@@ -14,6 +14,16 @@ directly.
 > ClockHandKit uses a private WidgetKit API.
 > It may change without notice, and apps using it may not pass App Review.
 
+## How rotation creates frame animation
+
+Arrange multiple animation frames on a circular wheel. ClockHandKit rotates
+the wheel while a fixed viewport reveals the frames in sequence.
+
+![ClockHandRotationEffect rotating a frame wheel through a fixed viewport](Documentation/clockhand-frame-animation.gif)
+
+ClockHandKit controls only the rotation. Your app builds the frame wheel and
+fixed viewport.
+
 ## Usage
 
 ```swift
@@ -42,6 +52,40 @@ hand.clockHandRotationEffect(
     anchor: .bottom
 )
 ```
+
+## Examples
+
+### Playback speed
+
+**`period` is the time for one full 360° rotation**, not the duration of a
+single frame.
+
+```text
+period = total frame slots / target FPS
+```
+
+The GIF above uses eight slots—frames `1` through `4` repeated twice. A period
+of eight seconds advances one slot per second and repeats the four-frame
+sequence every four seconds:
+
+```swift
+.clockHandRotationEffect(period: .custom(8))
+```
+
+For one copy of a 120-frame sequence arranged around the wheel:
+
+| Target rate | Frame interval | `period` |
+| ---: | ---: | ---: |
+| 12 FPS | 83.33 ms | 10 seconds |
+| 24 FPS | 41.67 ms | 5 seconds |
+| 30 FPS | 33.33 ms | 4 seconds |
+| 60 FPS | 16.67 ms | 2 seconds |
+
+If the same 120-frame sequence is placed twice around the wheel, double the
+`period`. These values describe target timing; WidgetKit controls the actual
+rendering cadence.
+
+<!-- Add the standalone example repository and real-device playback samples here. -->
 
 ## Why ClockHandKit
 
