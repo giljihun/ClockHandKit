@@ -1,28 +1,27 @@
 [English](README.md) · **한국어**
 
 # ClockHandKit
-
-ClockHandKit은 iOS 홈 화면 위젯에
-**실시간 시계 바늘 애니메이션**을 구현하도록 도와주는 Swift 패키지입니다.
-
-Apple은 같은 효과를 시스템 시계 위젯에서 사용하지만, 서드파티 개발자에게는
-공개 API로 제공하지 않습니다. ClockHandKit은 WidgetKit의 비공개
-`_ClockHandRotationEffect` modifier를 직접 사용합니다.
-
 > [!CAUTION]
-> ClockHandKit은 WidgetKit의 비공개 API를 사용합니다.
+> ClockHandKit은 WidgetKit의 비공개 API를 사용합니다.  
 > 이 API는 예고 없이 바뀔 수 있으며,
 > 이를 사용하는 앱은 App Review를 통과하지 못할 수 있습니다.
 
+**ClockHandKit**은 iOS 홈 화면 위젯에
+**실시간 시계 바늘 애니메이션**을 구현하도록 도와주는 Swift 패키지입니다.
+
+Apple은 같은 효과를 시스템 시계 위젯에서 사용하지만, 공개 API로 제공하지 않습니다.   
+**ClockHandKit**은 WidgetKit의 비공개 `_ClockHandRotationEffect` modifier를 직접 사용합니다.
+
+
 ## 회전으로 만드는 프레임 애니메이션
 
-여러 애니메이션 프레임을 원형 원판에 배치합니다. ClockHandKit이 원판을
-회전시키면 고정된 창을 통해 프레임이 차례로 보입니다.
+<img src="Documentation/clockhand-frame-animation.gif" width=600>
 
-![고정된 창을 통과하며 프레임 원판을 회전시키는 ClockHandRotationEffect](Documentation/clockhand-frame-animation.gif)
+여러 애니메이션 프레임을 원형 원판에 배치합니다.   
+**ClockHandKit**이 원판을 회전시키면 고정된 창을 통해 프레임이 차례로 보입니다.
 
-ClockHandKit은 회전만 담당합니다. 프레임 원판과 고정된 창은 앱에서
-구성합니다.
+**ClockHandKit**은 회전만 담당합니다.  
+프레임 원판과 고정된 창은 앱에서 구성합니다.
 
 ## 사용법
 
