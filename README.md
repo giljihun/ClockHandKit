@@ -2,27 +2,29 @@
 
 # ClockHandKit
 
-ClockHandKit helps you add **real-time clock-hand animations**
-to iOS Home Screen widgets.
-
-Apple uses the same effect in its Clock widget,
-but does not expose it as a public API for third-party developers.
-ClockHandKit accesses WidgetKit's private `_ClockHandRotationEffect` modifier
-directly.
-
 > [!CAUTION]
 > ClockHandKit uses a private WidgetKit API.
-> It may change without notice, and apps using it may not pass App Review.
+> It may change without notice,
+> and apps using it may not pass App Review.
+
+**ClockHandKit** helps you add **real-time clock-hand animations**
+to iOS Home Screen widgets.
+
+Apple uses the same effect in its Clock widget but does not expose it as a
+public API.
+**ClockHandKit** directly accesses WidgetKit's private
+`_ClockHandRotationEffect` modifier.
 
 ## How rotation creates frame animation
 
-Arrange multiple animation frames on a circular wheel. ClockHandKit rotates
-the wheel while a fixed viewport reveals the frames in sequence.
+<img src="Documentation/clockhand-frame-animation.gif" width=600>
 
-![ClockHandRotationEffect rotating a frame wheel through a fixed viewport](Documentation/clockhand-frame-animation.gif)
+Arrange multiple animation frames on a circular wheel.
+**ClockHandKit** rotates the wheel while a fixed viewport reveals the frames
+in sequence.
 
-ClockHandKit controls only the rotation. Your app builds the frame wheel and
-fixed viewport.
+**ClockHandKit** controls only the rotation.
+Your app builds the frame wheel and fixed viewport.
 
 ## Usage
 
