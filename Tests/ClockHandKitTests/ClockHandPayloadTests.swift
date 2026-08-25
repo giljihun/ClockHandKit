@@ -13,12 +13,12 @@ struct ClockHandPayloadTests {
         #expect(ClockHandPeriod.custom(7.5).duration == 7.5)
     }
 
-    @Test("Payload matches WidgetKit's private Codable storage")
-    func payloadMatchesPrivateStorage() throws {
+    @Test("Payload encodes the anchor without UnitPoint Codable")
+    func payloadEncodesAnchorWithoutUnitPointCodable() throws {
         let payload = _ClockHandData(
             period: ClockHandPeriod.secondHand.duration,
             timeZone: try #require(TimeZone(identifier: "GMT")),
-            anchor: .center
+            anchor: UnitPoint(x: 0.25, y: 0.75)
         )
 
         let data = try JSONEncoder().encode(payload)
@@ -27,7 +27,7 @@ struct ClockHandPayloadTests {
         let timeZone = try #require(object["timeZone"] as? [String: String])
 
         #expect(object["period"] as? Double == 60)
-        #expect(anchor == [0.5, 0.5])
+        #expect(anchor == [0.25, 0.75])
         #expect(timeZone["identifier"] == "GMT")
     }
 }

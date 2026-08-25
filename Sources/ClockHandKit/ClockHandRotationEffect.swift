@@ -40,12 +40,30 @@ public enum ClockHandPeriod {
 
 // MARK: - Codable JSON structures matching WidgetKit._ClockHandRotationEffect
 
-/// Mirrors the default Codable synthesis of `WidgetKit._ClockHandRotationEffect`.
-/// The struct layout and CodingKeys must match WidgetKit's private type exactly.
+/// Encodes the JSON storage accepted by `WidgetKit._ClockHandRotationEffect`.
+///
+/// `UnitPoint` only gains `Codable` conformance on iOS 26. Encode the anchor
+/// manually so the package's iOS 16 deployment target remains safe at runtime.
 struct _ClockHandData: Encodable {
     let period: TimeInterval
     let timeZone: TimeZone
     let anchor: UnitPoint
+
+    private enum CodingKeys: String, CodingKey {
+        case period
+        case timeZone
+        case anchor
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(period, forKey: .period)
+        try container.encode(timeZone, forKey: .timeZone)
+
+        var anchorContainer = container.nestedUnkeyedContainer(forKey: .anchor)
+        try anchorContainer.encode(Double(anchor.x))
+        try anchorContainer.encode(Double(anchor.y))
+    }
 }
 
 // MARK: - Runtime bridge to WidgetKit's private modifier
