@@ -32,19 +32,16 @@ ClockHandKit applies the same effect another way and keeps up with WidgetKit cha
 </p>
 
 <p align="center">
-  <sub><strong>Left</strong>: ClockHandKit<br><strong>Right</strong>: the original ClockHandRotationKit on iOS 26.1 and later<br>Recorded on an iPhone in real time</sub>
+  <sub><strong>Left</strong>: ClockHandKit<br><strong>Right</strong>: the original ClockHandRotationKit on iOS 26.1 and later</sub>
 </p>
 
 ## Installation
 
-Add the package with Swift Package Manager.
+### Swift Package Manager
 
 ```swift
 .package(url: "https://github.com/giljihun/ClockHandKit.git", from: "0.1.2")
 ```
-
-In Xcode, choose **File › Add Package Dependencies…** and enter the URL above.
-Add `ClockHandKit` to your **widget extension** target.
 
 ## Usage
 

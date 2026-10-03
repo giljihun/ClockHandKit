@@ -32,19 +32,16 @@ ClockHandKit은 같은 효과를 다른 경로로 적용하고, 이후 WidgetKit
 </p>
 
 <p align="center">
-  <sub><strong>왼쪽</strong>: ClockHandKit<br><strong>오른쪽</strong>: 기존 ClockHandRotationKit을 iOS 26.1 이후에 썼을 때<br>아이폰에서 실제 시간 그대로 녹화</sub>
+  <sub><strong>왼쪽</strong>: ClockHandKit<br><strong>오른쪽</strong>: 기존 ClockHandRotationKit을 iOS 26.1 이후에 썼을 때</sub>
 </p>
 
 ## 설치
 
-Swift Package Manager로 추가합니다.
+### Swift Package Manager
 
 ```swift
 .package(url: "https://github.com/giljihun/ClockHandKit.git", from: "0.1.2")
 ```
-
-Xcode에서는 **File › Add Package Dependencies…** 를 열고 위 주소를 넣으면 됩니다.
-`ClockHandKit`은 **위젯 익스텐션** 타깃에 추가하세요.
 
 ## 사용법
 
