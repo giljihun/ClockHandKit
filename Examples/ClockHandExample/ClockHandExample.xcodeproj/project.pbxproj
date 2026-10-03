@@ -200,7 +200,7 @@
 			mainGroup = 4CBAF77130076E54003667A0;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				4CE49696300773A3003A2259 /* XCRemoteSwiftPackageReference "ClockHandKit" */,
+				4CE49696300773A3003A2259 /* XCLocalSwiftPackageReference "../.." */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4CBAF77B30076E55003667A0 /* Products */;
@@ -535,21 +535,17 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		4CE49696300773A3003A2259 /* XCRemoteSwiftPackageReference "ClockHandKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/giljihun/ClockHandKit.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		4CE49696300773A3003A2259 /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		4CE49697300773A3003A2259 /* ClockHandKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4CE49696300773A3003A2259 /* XCRemoteSwiftPackageReference "ClockHandKit" */;
+			package = 4CE49696300773A3003A2259 /* XCLocalSwiftPackageReference "../.." */;
 			productName = ClockHandKit;
 		};
 /* End XCSwiftPackageProductDependency section */
