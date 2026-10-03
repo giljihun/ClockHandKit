@@ -23,10 +23,13 @@
 
 ---
 
-Apple turns the hands of its Clock widget with `_ClockHandRotationEffect`, a private WidgetKit API that isn't offered to other apps.
-ClockHandKit builds this effect at runtime and applies it, so third-party widgets can use it too.
+Apple turns the hands of its Clock widget with `_ClockHandRotationEffect`. But it's a private WidgetKit API, so other apps don't get it.
+**ClockHandKit** builds this effect at runtime and applies it, so widgets in your own apps can use it too.
 
-> Starting with iOS 26.1, WidgetKit stopped applying the rotation for third-party apps built with Xcode 26.1 or later. Apps using ClockHandRotationKit still build, but their hands stay still. See the [release notes](https://github.com/giljihun/ClockHandKit/releases) for details.
+> [ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit) used to do the same thing, but it stopped working in apps built with Xcode 26.1 or later on iOS 26.1.
+> So I made a new library that works around it. 😆
+>
+> See the [release notes](https://github.com/giljihun/ClockHandKit/releases) for details.
 
 <p align="center">
   <img src="Documentation/clockhandkit-demo.gif" alt="ClockHandKit rotating on a real device next to ClockHandRotationKit" width="560">
@@ -113,11 +116,8 @@ ClockHandKit requires iOS 16 or later. Don't import both modules into the same t
 
 ## Acknowledgements ❤️
 
-ClockHandKit was inspired by [octree/ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit).
-I contributed to that project as a collaborator.
-
-My heartfelt thanks to **octree** for open-sourcing the original implementation and API.
-This work began there. ❤️
+ClockHandKit started from [octree/ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit), which I contributed to as a collaborator.
+My heartfelt thanks to **octree** for all the inspiration. ❤️
 
 ## License
 
