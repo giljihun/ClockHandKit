@@ -44,6 +44,9 @@ public enum ClockHandPeriod {
 ///
 /// `UnitPoint` only gains `Codable` conformance on iOS 26. Encode the anchor
 /// manually so the package's iOS 16 deployment target remains safe at runtime.
+///
+/// WidgetKit in the 27 releases requires `honorIdealizedDate` when decoding.
+/// Earlier releases ignore the extra key, so it is always sent.
 struct _ClockHandData: Encodable {
     let period: TimeInterval
     let timeZone: TimeZone
@@ -53,12 +56,15 @@ struct _ClockHandData: Encodable {
         case period
         case timeZone
         case anchor
+        case honorIdealizedDate
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(period, forKey: .period)
         try container.encode(timeZone, forKey: .timeZone)
+        // false: rotate by the real current time, not the idealized preview time
+        try container.encode(false, forKey: .honorIdealizedDate)
 
         var anchorContainer = container.nestedUnkeyedContainer(forKey: .anchor)
         try anchorContainer.encode(Double(anchor.x))

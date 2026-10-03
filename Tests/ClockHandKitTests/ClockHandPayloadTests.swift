@@ -30,4 +30,18 @@ struct ClockHandPayloadTests {
         #expect(anchor == [0.25, 0.75])
         #expect(timeZone["identifier"] == "GMT")
     }
+
+    @Test("Payload includes honorIdealizedDate required by WidgetKit 27")
+    func payloadIncludesHonorIdealizedDate() throws {
+        let payload = _ClockHandData(
+            period: ClockHandPeriod.secondHand.duration,
+            timeZone: try #require(TimeZone(identifier: "GMT")),
+            anchor: .center
+        )
+
+        let data = try JSONEncoder().encode(payload)
+        let object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+
+        #expect(object["honorIdealizedDate"] as? Bool == false)
+    }
 }
