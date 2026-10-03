@@ -27,7 +27,8 @@ Apple turns the hands of its Clock widget with `_ClockHandRotationEffect`. But i
 **ClockHandKit** builds this effect at runtime and applies it, so widgets in your own apps can use it too.
 
 > [ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit) used to do the same thing, but it stopped working in apps built with Xcode 26.1 or later on iOS 26.1.
-> So I made a new library that works around it. 😆
+> The `_clockHandRotationEffect()` function it relied on now returns the view unchanged in third-party apps, without adding the effect.
+> So I made a new framework that skips that function and builds the `_ClockHandRotationEffect` it used internally. 😆
 >
 > See the [release notes](https://github.com/giljihun/ClockHandKit/releases) for details.
 

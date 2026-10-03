@@ -24,10 +24,12 @@
 ---
 
 Apple은 시계 위젯의 바늘을 `_ClockHandRotationEffect`로 움직입니다. 하지만 WidgetKit의 비공개 API라 다른 앱에는 제공되지 않습니다.
-**ClockHandKit**은 이 효과를 런타임에 직접 만들어 적용해서, 개발자 앱의 위젯에서도 쓸 수 있게 한 프레임워크입니다.
+**ClockHandKit**은 이 효과를 런타임에 직접 만들어 적용해서, 직접 만든 앱의 위젯에서도 쓸 수 있게 한 프레임워크입니다.
 
-> 기존에는 [ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit)라는 같은 동작을 하는 프레임워크가 있었지만, iOS 26.1부터 WidgetKit이 Xcode 26.1 이상으로 빌드한 앱에선 동작하지 않았습니다.
-그래서 새로운 심볼들에 대해 대응하는 새로운 라이브러리를 따로 만들게되었습니다. 😆  
+> 기존에는 같은 동작을 하는 [ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit)이라는 프레임워크가 있었지만, iOS 26.1부터 Xcode 26.1 이상으로 빌드한 앱에서는 동작하지 않게 되었습니다.
+> ClockHandRotationKit이 쓰던 `_clockHandRotationEffect()` 함수가 서드파티 앱에서는 효과를 붙이지 않고 뷰를 그대로 돌려주게 바뀌었기 때문입니다.
+> 그래서 이 함수 대신, 함수가 안에서 쓰던 `_ClockHandRotationEffect`를 직접 만들어 붙이는 프레임워크를 새로 만들게 되었습니다. 😆
+>
 > 자세한 내용은 [릴리스 노트](https://github.com/giljihun/ClockHandKit/releases)에 있습니다.
 
 <p align="center">
