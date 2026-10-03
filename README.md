@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  Starting with iOS 26.1, WidgetKit stopped applying the rotation for third-party apps built with Xcode 26.1 or later. Apps using ClockHandRotationKit still built, but their hands stayed still.
+</p>
+
+<p align="center">
   <a href="https://github.com/giljihun/ClockHandKit/stargazers"><img src="https://img.shields.io/github/stars/giljihun/ClockHandKit?style=flat-square&amp;color=111111&amp;label=stars" alt="GitHub stars"></a>
   <a href="https://github.com/giljihun/ClockHandKit/releases/latest"><img src="https://img.shields.io/github/v/release/giljihun/ClockHandKit?style=flat-square&amp;color=111111&amp;label=release" alt="Latest release"></a>
   <a href="Package.swift"><img src="https://img.shields.io/badge/Swift-6.2-111111?style=flat-square&amp;logo=swift&amp;logoColor=white" alt="Swift 6.2"></a>
@@ -22,8 +26,6 @@
 </p>
 
 ---
-
-Starting with iOS 26.1, WidgetKit stopped applying the rotation for third-party apps built with Xcode 26.1 or later. Apps using ClockHandRotationKit still built, but their hands stayed still.
 
 ClockHandKit applies the same effect another way and keeps up with WidgetKit changes. See the [release notes](https://github.com/giljihun/ClockHandKit/releases) for details and test results.
 
@@ -43,9 +45,7 @@ ClockHandKit applies the same effect another way and keeps up with WidgetKit cha
 .package(url: "https://github.com/giljihun/ClockHandKit.git", from: "0.1.2")
 ```
 
-## Usage
-
-### Clock hands
+## Usage and how it works
 
 ```swift
 import SwiftUI

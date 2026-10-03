@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  iOS 26.1부터 WidgetKit이 Xcode 26.1 이상으로 빌드한 서드파티 앱에는 회전을 적용하지 않게 바뀌었습니다. ClockHandRotationKit을 쓴 앱은 빌드는 되지만 바늘이 멈춰 있게 됩니다.
+</p>
+
+<p align="center">
   <a href="https://github.com/giljihun/ClockHandKit/stargazers"><img src="https://img.shields.io/github/stars/giljihun/ClockHandKit?style=flat-square&amp;color=111111&amp;label=stars" alt="GitHub stars"></a>
   <a href="https://github.com/giljihun/ClockHandKit/releases/latest"><img src="https://img.shields.io/github/v/release/giljihun/ClockHandKit?style=flat-square&amp;color=111111&amp;label=release" alt="Latest release"></a>
   <a href="Package.swift"><img src="https://img.shields.io/badge/Swift-6.2-111111?style=flat-square&amp;logo=swift&amp;logoColor=white" alt="Swift 6.2"></a>
@@ -22,8 +26,6 @@
 </p>
 
 ---
-
-iOS 26.1부터 WidgetKit이 Xcode 26.1 이상으로 빌드한 서드파티 앱에는 회전을 적용하지 않게 바뀌었습니다. ClockHandRotationKit을 쓴 앱은 빌드는 되지만 바늘이 멈춰 있게 됩니다.
 
 ClockHandKit은 같은 효과를 다른 경로로 적용하고, 이후 WidgetKit 변경에도 계속 맞춰갑니다. 자세한 내용과 검증 결과는 [릴리스 노트](https://github.com/giljihun/ClockHandKit/releases)에 있습니다.
 
@@ -43,9 +45,7 @@ ClockHandKit은 같은 효과를 다른 경로로 적용하고, 이후 WidgetKit
 .package(url: "https://github.com/giljihun/ClockHandKit.git", from: "0.1.2")
 ```
 
-## 사용법
-
-### 시계바늘
+## 사용법과 원리
 
 ```swift
 import SwiftUI
