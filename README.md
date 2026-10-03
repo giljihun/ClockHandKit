@@ -5,7 +5,7 @@
 <h1 align="center">ClockHandKit</h1>
 
 <p align="center">
-  <em>Continuous, time-driven animations for iOS Home Screen widgets.</em>
+  <em>A framework for continuous animation in iOS widgets.</em>
 </p>
 
 <p align="center">
@@ -23,14 +23,16 @@
 
 ---
 
-Keep widget clock hands turning on iOS 26.1 and later.
+Starting with iOS 26.1, WidgetKit stopped applying the rotation for third-party apps built with Xcode 26.1 or later. Apps using ClockHandRotationKit still built, but their hands stayed still.
+
+ClockHandKit applies the same effect another way and keeps up with WidgetKit changes. See the [release notes](https://github.com/giljihun/ClockHandKit/releases) for details and test results.
 
 <p align="center">
   <img src="Documentation/clockhandkit-demo.gif" alt="ClockHandKit rotating on a real device next to ClockHandRotationKit" width="560">
 </p>
 
 <p align="center">
-  <sub><strong>Left</strong>: ClockHandKit · <strong>Right</strong>: the original ClockHandRotationKit on iOS 26.1 and later<br>Recorded on an iPhone in real time</sub>
+  <sub><strong>Left</strong>: ClockHandKit<br><strong>Right</strong>: the original ClockHandRotationKit on iOS 26.1 and later<br>Recorded on an iPhone in real time</sub>
 </p>
 
 ## Installation
@@ -112,12 +114,6 @@ Existing calls such as `.clockHandRotationEffect(period: 60)` keep working.
 For new code, the typed API reads better: `.clockHandRotationEffect(period: .secondHand)`.
 
 ClockHandKit requires iOS 16 or later. Don't import both modules into the same target, because their extension methods can conflict.
-
-## Why ClockHandKit
-
-Starting with iOS 26.1, WidgetKit stopped applying the rotation for third-party apps built with Xcode 26.1 or later. Apps using ClockHandRotationKit still built, but their hands stayed still.
-
-ClockHandKit applies the same effect another way and keeps up with WidgetKit changes. See the [release notes](https://github.com/giljihun/ClockHandKit/releases) for details and test results.
 
 ## Acknowledgements ❤️
 

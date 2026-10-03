@@ -5,7 +5,7 @@
 <h1 align="center">ClockHandKit</h1>
 
 <p align="center">
-  <em>iOS 홈 화면 위젯을 위한 시간 기반 연속 애니메이션.</em>
+  <em>iOS 위젯 애니메이션을 가능하게 하는 프레임워크</em>
 </p>
 
 <p align="center">
@@ -23,14 +23,16 @@
 
 ---
 
-iOS 26.1 이후에도 위젯의 시계바늘이 계속 돌아가게 해줍니다.
+iOS 26.1부터 WidgetKit이 Xcode 26.1 이상으로 빌드한 서드파티 앱에는 회전을 적용하지 않게 바뀌었습니다. ClockHandRotationKit을 쓴 앱은 빌드는 되지만 바늘이 멈춰 있게 됩니다.
+
+ClockHandKit은 같은 효과를 다른 경로로 적용하고, 이후 WidgetKit 변경에도 계속 맞춰갑니다. 자세한 내용과 검증 결과는 [릴리스 노트](https://github.com/giljihun/ClockHandKit/releases)에 있습니다.
 
 <p align="center">
   <img src="Documentation/clockhandkit-demo.gif" alt="실기기에서 ClockHandKit과 ClockHandRotationKit을 나란히 실행한 모습" width="560">
 </p>
 
 <p align="center">
-  <sub><strong>왼쪽</strong>: ClockHandKit · <strong>오른쪽</strong>: 기존 ClockHandRotationKit을 iOS 26.1 이후에 썼을 때<br>아이폰에서 실제 시간 그대로 녹화</sub>
+  <sub><strong>왼쪽</strong>: ClockHandKit<br><strong>오른쪽</strong>: 기존 ClockHandRotationKit을 iOS 26.1 이후에 썼을 때<br>아이폰에서 실제 시간 그대로 녹화</sub>
 </p>
 
 ## 설치
@@ -112,12 +114,6 @@ import만 바꾸면 됩니다.
 새로 쓰는 코드라면 `.clockHandRotationEffect(period: .secondHand)`처럼 쓰는 편이 읽기 쉽습니다.
 
 ClockHandKit은 iOS 16 이상이 필요합니다. 두 모듈을 한 타깃에 같이 import하면 extension 메서드가 충돌할 수 있으니 하나만 쓰세요.
-
-## 왜 ClockHandKit인가
-
-iOS 26.1부터 WidgetKit이 Xcode 26.1 이상으로 빌드한 서드파티 앱에는 회전을 적용하지 않게 바뀌었습니다. ClockHandRotationKit을 쓴 앱은 빌드는 되지만 바늘이 멈춰 있게 됩니다.
-
-ClockHandKit은 같은 효과를 다른 경로로 적용하고, 이후 WidgetKit 변경에도 계속 맞춰갑니다. 자세한 내용과 검증 결과는 [릴리스 노트](https://github.com/giljihun/ClockHandKit/releases)에 있습니다.
 
 ## 감사의 말 ❤️
 
