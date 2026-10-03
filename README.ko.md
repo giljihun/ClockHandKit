@@ -101,6 +101,8 @@ period = 전체 프레임 칸 수 / 목표 FPS
 
 `Examples/ClockHandExample`에 시계 위젯이 들어 있는 예제 앱이 있습니다.
 
+프레임 애니메이션 예제는 ClockHandKit으로 만든 흔들리는 키링 위젯, [KeyringWidget](https://github.com/giljihun/KeyringWidget)을 보세요.
+
 ## ClockHandRotationKit에서 옮겨오기
 
 import만 바꾸면 됩니다.

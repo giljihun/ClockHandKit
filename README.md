@@ -101,6 +101,8 @@ These are targets. WidgetKit and the device decide the actual rendering cadence.
 
 `Examples/ClockHandExample` contains an app with a clock widget.
 
+For frame animation, see [KeyringWidget](https://github.com/giljihun/KeyringWidget), a swinging keyring widget built with ClockHandKit.
+
 ## Migrating from ClockHandRotationKit
 
 Replace the import.
