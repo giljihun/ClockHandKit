@@ -23,67 +23,68 @@
 
 ---
 
-> [!CAUTION]
-> ClockHandKit은 WidgetKit의 비공개 API를 사용합니다.
-> 이 API는 예고 없이 바뀔 수 있습니다.
-> 이를 사용하는 앱은 App Review를 통과하지 못할 수 있습니다.
+iOS 26.1 이후에도 위젯의 시계바늘이 계속 돌아가게 해줍니다.
 
-Apple은 같은 효과를 시스템 시계 위젯에서 사용합니다.
-하지만 이 효과를 공개 API로 제공하지 않습니다.
+<p align="center">
+  <img src="Documentation/clockhandkit-demo.gif" alt="실기기에서 ClockHandKit과 ClockHandRotationKit을 나란히 실행한 모습" width="560">
+</p>
 
-**ClockHandKit**은 WidgetKit의 비공개 modifier인
-`_ClockHandRotationEffect`를 직접 사용합니다.
+<p align="center">
+  <sub><strong>왼쪽</strong>: ClockHandKit · <strong>오른쪽</strong>: 기존 ClockHandRotationKit을 iOS 26.1 이후에 썼을 때<br>아이폰에서 실제 시간 그대로 녹화</sub>
+</p>
 
-## 원리
+## 설치
 
-일반적인 WidgetKit 위젯은 시스템이 정한 시점마다 **정적인 타임라인 스냅샷**을 갱신합니다.
+Swift Package Manager로 추가합니다.
 
-[공개 API로 제공되는 위젯 애니메이션][widget-animations]은 위젯 데이터가 바뀔 때 실행됩니다.
-이 애니메이션은 최대 2초 동안 동작하는 짧은 전환 효과입니다.
+```swift
+.package(url: "https://github.com/giljihun/ClockHandKit.git", from: "0.1.2")
+```
 
-일반적인 타임라인 방식만으로는 프레임이 계속 이어지는 연속 애니메이션을 만들 수 없습니다.
+Xcode에서는 **File › Add Package Dependencies…** 를 열고 위 주소를 넣으면 됩니다.
+`ClockHandKit`은 **위젯 익스텐션** 타깃에 추가하세요.
 
-`ClockHandRotationEffect`는 다르게 동작합니다.
-새 타임라인 스냅샷을 기다리지 않습니다.
-WidgetKit 내부에서 현재 시간에 맞춰 View를 회전시킵니다.
+## 사용법
 
-여러 애니메이션 프레임을 원형 원판에 배치합니다.
-한 프레임만 보이도록 창을 고정합니다.
-원판이 회전하면 프레임이 차례로 나타나 애니메이션처럼 보입니다.
-
-<img src="Documentation/clockhand-frame-animation.gif" alt="회전 원판으로 만드는 프레임 애니메이션" width="600">
-
-**ClockHandKit은 이 회전 효과를 서드파티 위젯에 적용합니다.**
-프레임 원판과 고정된 창은 앱에서 구성합니다.
-
-## 사용법과 예제
-
-위 GIF는 8개 슬롯을 사용합니다.
-프레임 `1`부터 `4`까지를 두 번 배치했습니다.
-
-다음 코드는 앱에서 만든 프레임 원판을 8초마다 한 바퀴 회전시킵니다.
+### 시계바늘
 
 ```swift
 import SwiftUI
 import ClockHandKit
 
-// 앱에서 만든 8개 프레임 슬롯의 원판
+ZStack {
+    hourHand.clockHandRotationEffect(period: .hourHand)
+    minuteHand.clockHandRotationEffect(period: .minuteHand)
+    secondHand.clockHandRotationEffect(period: .secondHand)
+}
+```
+
+시간대는 `in`, 회전 중심은 `anchor`로 정합니다.
+
+```swift
+secondHand.clockHandRotationEffect(period: .secondHand, in: .gmt, anchor: .bottom)
+```
+
+### 프레임 애니메이션
+
+이 효과는 새 타임라인을 기다리지 않고 현재 시각에 맞춰 뷰를 돌립니다.
+원판 둘레에 프레임을 놓고, 고정된 창으로 한 칸씩만 보이게 하면 원판이 돌면서 프레임이 차례로 재생됩니다.
+
+<img src="Documentation/clockhand-frame-animation.gif" alt="회전 원판으로 만드는 프레임 애니메이션" width="600">
+
+```swift
+// 앱에서 만든 8칸짜리 프레임 원판
 frameWheel
     .clockHandRotationEffect(period: .custom(8))
 ```
 
-8개 슬롯은 8초 동안 한 바퀴 회전합니다.
-1초마다 다음 슬롯이 나타납니다.
-4프레임 애니메이션은 4초마다 반복됩니다.
-
-`period`는 프레임 한 장의 시간이 아닙니다.
-**원판이 360° 회전하는 데 걸리는 시간**입니다.
+`period`는 프레임 한 장의 시간이 아니라 원판이 한 바퀴(360°) 도는 시간입니다.
 
 ```text
-period = 전체 프레임 슬롯 수 / 목표 FPS
+period = 전체 프레임 칸 수 / 목표 FPS
 ```
 
-120프레임을 원판에 한 번 배치한다면 다음 값을 사용할 수 있습니다.
+120프레임을 원판에 한 번 배치할 때:
 
 | 목표 재생 속도 | `period` |
 | ---: | ---: |
@@ -92,103 +93,38 @@ period = 전체 프레임 슬롯 수 / 목표 FPS
 | 30 FPS | 4초 |
 | 60 FPS | 2초 |
 
-실제 시계 바늘에는 `.hourHand`, `.minuteHand`, `.secondHand`를 사용합니다.
-프레임 애니메이션에는 `.custom(seconds)`를 사용합니다.
+목표치일 뿐이고, 실제로 얼마나 자주 그릴지는 WidgetKit과 기기가 정합니다.
 
-타임존은 `in`으로 지정합니다.
-회전 기준점은 `anchor`로 지정합니다.
+### 예제
 
-표의 값은 목표 재생 속도입니다.
-실제 렌더링 주기는 WidgetKit과 기기가 결정합니다.
+`Examples/ClockHandExample`에 시계 위젯이 들어 있는 예제 앱이 있습니다.
 
-<!-- 추후 별도 예제 저장소와 실제 기기 재생 샘플 링크를 추가합니다. -->
+## ClockHandRotationKit에서 옮겨오기
 
-## ClockHandKit을 만든 이유
-
-[ClockHandRotationKit][clockhand-rotation-kit]을 사용하는 앱은 Xcode 26.0.1로 빌드했을 때 정상적으로 동작했습니다.
-이 빌드는 검증한 iOS 26.1 이상 환경에서도 동작했습니다.
-
-**Xcode 26.1 이상**으로 빌드한 서드파티 앱을
-**iOS 26.1 이상**에서 실행할 때 회전 효과가 적용되지 않았습니다.
-해당 앱의 **컴파일과 링크 자체는 정상적으로 완료**됐습니다.
-
-원인을 추적한 결과 WidgetKit이 런타임 제한을 추가한 사실을 확인했습니다.
-이 제한은 링크 SDK와 앱의 번들 식별자를 확인합니다.
-조건에 걸린 서드파티 앱에는 modifier를 적용하지 않고 원본 View를 반환합니다.
-
-이는 Swift 버전이나 JSON payload 형식의 변화가 아닙니다.
-**WidgetKit의 런타임 제한**입니다.
-
-ClockHandKit은 제한된 진입점을 사용하지 않습니다.
-내부 modifier를 직접 구성해 적용합니다.
-
-### 검증
-
-- **ClockHandKit 패키지 빌드**
-  - Xcode 26.1, 26.4, 26.5
-- **예제 앱과 두 Widget Extension**
-  - Xcode 26.5
-- **런타임 modifier 브리지**
-  - iOS 26.1, iOS 26.5 Simulator
-- **기존 진입점 교차 검증**
-  - `SDK 26.0 → iOS 26.1`: 동작
-  - `SDK 26.1 → iOS 26.0`: 동작
-  - `SDK 26.1 → iOS 26.1`, 서드파티 앱: 실패
-- **ClockHandRotationKit 컴파일·링크 매트릭스**
-  - 릴리스: 1.0.0, 1.0.1, 1.1.0
-  - Xcode: 26.0.1, 26.1.1, 26.5
-  - 타깃: iOS arm64, Simulator arm64, Simulator x86_64
-  - 구성: Debug, Release
-  - 결과: **54개 조합 모두 컴파일 및 링크 성공**
-
-54개 조합은 모두 정상적으로 빌드됐습니다.
-따라서 문제는 컴파일이나 링크가 아닌 런타임 동작에 있습니다.
-
-관련 자료:
-
-- [최초 iOS 26.1 호환성 리포트][compatibility-report]
-- [WidgetKit 바이너리 diff][widgetkit-binary-diff]
-
-## ClockHandRotationKit에서 이전하기
-
-import를 다음과 같이 바꿉니다.
+import만 바꾸면 됩니다.
 
 ```diff
 -import ClockHandRotationKit
 +import ClockHandKit
 ```
 
-소스 호환 이전을 위해 `TimeInterval` 오버로드를 제공합니다.
+`.clockHandRotationEffect(period: 60)` 같은 기존 호출은 그대로 동작합니다.
+새로 쓰는 코드라면 `.clockHandRotationEffect(period: .secondHand)`처럼 쓰는 편이 읽기 쉽습니다.
 
-```swift
-.clockHandRotationEffect(period: 60)
-```
+ClockHandKit은 iOS 16 이상이 필요합니다. 두 모듈을 한 타깃에 같이 import하면 extension 메서드가 충돌할 수 있으니 하나만 쓰세요.
 
-새 코드에는 타입 기반 API를 권장합니다.
+## 왜 ClockHandKit인가
 
-```swift
-.clockHandRotationEffect(period: .secondHand)
-```
+iOS 26.1부터 WidgetKit이 Xcode 26.1 이상으로 빌드한 서드파티 앱에는 회전을 적용하지 않게 바뀌었습니다. ClockHandRotationKit을 쓴 앱은 빌드는 되지만 바늘이 멈춰 있게 됩니다.
 
-ClockHandRotationKit은 iOS 14 이상을 선언합니다.
-ClockHandKit은 iOS 16 이상이 필요합니다.
-
-두 모듈의 extension method가 충돌할 수 있습니다.
-같은 타깃에 두 모듈을 함께 import하지 마세요.
+ClockHandKit은 같은 효과를 다른 경로로 적용하고, 이후 WidgetKit 변경에도 계속 맞춰갑니다. 자세한 내용과 검증 결과는 [릴리스 노트](https://github.com/giljihun/ClockHandKit/releases)에 있습니다.
 
 ## 감사의 말 ❤️
 
-ClockHandKit은 제가 공동 작업자로 참여했던
-[octree/ClockHandRotationKit][clockhand-rotation-kit]에서 영감을 받았습니다.
+ClockHandKit은 제가 공동 작업자로 참여했던 [octree/ClockHandRotationKit](https://github.com/octree/ClockHandRotationKit)에서 출발했습니다.
 
-최초 구현과 API를 공개해 주신 **octree님께 진심으로 감사드립니다.**
-ClockHandKit은 이 작업에서 출발했습니다. ❤️
+최초 구현과 API를 공개해 주신 **octree님께 진심으로 감사드립니다.** ❤️
 
 ## 라이선스
 
 ClockHandKit은 [MIT License](LICENSE)로 제공됩니다.
-
-[widget-animations]: https://developer.apple.com/documentation/widgetkit/animating-data-updates-in-widgets-and-live-activities
-[clockhand-rotation-kit]: https://github.com/octree/ClockHandRotationKit
-[compatibility-report]: https://github.com/octree/ClockHandRotationKit/issues/11
-[widgetkit-binary-diff]: https://github.com/blacktop/ipsw-diffs/blob/809573f26c4185c71fc786fb9adadab06c50ad0f/26_1_23B5044l__vs_26_1_23B5059e/DYLIBS/WidgetKit.md#L280-L304
